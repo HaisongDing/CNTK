@@ -125,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libacml_mp_dll.lib;mkl_core_dll.lib;mkl_intel_ilp64_dll.lib;mkl_intel_lp64_dll.lib;mkl_intel_thread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
-      <DelayLoadDLLs>libacml_mp_dll.lib;$(CudaDlls);%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>libacml_mp_dll.dll;$(CudaDlls);%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /D /I /Y "$(MKL_PATH)\mkl\redist\intel64\mkl\*.dll" $(OutputPath)
