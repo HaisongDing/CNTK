@@ -53,6 +53,10 @@
     <LinkIncremental>false</LinkIncremental>
     <TargetName>Math</TargetName>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(MKL_PATH)\mkl\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(MKL_PATH)\mkl\lib\intel64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(ACML_PATH)\include;$(SolutionDir)Source\Common\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -103,7 +107,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>USE_ACML; NO_SYNC; WIN32; NDEBUG; _WINDOWS; _USRDLL; MATH_EXPORTS; %(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_ACML;USE_MKL; NO_SYNC; WIN32; NDEBUG; _WINDOWS; _USRDLL; MATH_EXPORTS; %(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FloatingPointModel>Fast</FloatingPointModel>
@@ -119,13 +123,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libacml_mp_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libacml_mp_dll.lib;mkl_core_dll.lib;mkl_intel_ilp64_dll.lib;mkl_intel_lp64_dll.lib;mkl_intel_thread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
-      <DelayLoadDLLs>libacml_mp_dll.dll; $(CudaDlls); %(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>libacml_mp_dll.lib;$(CudaDlls);%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
-      <Message>Copying ACML DLLs</Message>
+      <Command>xcopy /D /I /Y "$(MKL_PATH)\mkl\redist\intel64\mkl\*.dll" $(OutputPath)
+xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
+      <Message>Copying MKL DLLs</Message>
     </PostBuildEvent>
     <CudaCompile>
       <FastMath>true</FastMath>
