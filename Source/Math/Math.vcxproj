@@ -175,6 +175,7 @@ xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
     <ClInclude Include="MatrixQuantizerImpl.h" />
     <ClInclude Include="TensorOps.h" />
     <ClInclude Include="TensorView.h" />
+    <None Include="ClassDiagram.cd" />
     <None Include="GPUWatcher.cu" />
     <None Include="GPUWatcher.h">
       <FileType>CppHeader</FileType>
