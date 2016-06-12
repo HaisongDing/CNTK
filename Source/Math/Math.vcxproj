@@ -81,12 +81,12 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libacml_mp_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libacml_mp_dll.lib;Common.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>libacml_mp_dll.dll; $(CudaDlls); %(DelayLoadDLLs)</DelayLoadDLLs>
       <Profile>true</Profile>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
+      <Command>xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" "$(OutputPath)"</Command>
       <Message>Copying ACML DLLs</Message>
     </PostBuildEvent>
     <CudaCompile>
@@ -125,7 +125,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libacml_mp_dll.lib;mkl_core_dll.lib;mkl_intel_ilp64_dll.lib;mkl_intel_lp64_dll.lib;mkl_intel_thread_dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <Profile>true</Profile>
-      <DelayLoadDLLs>libacml_mp_dll.dll;$(CudaDlls);%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>libacml_mp_dll.dll; $(CudaDlls); %(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /D /I /Y "$(MKL_PATH)\mkl\redist\intel64\mkl\*.dll" $(OutputPath)
@@ -172,7 +172,9 @@ xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
     <ClInclude Include="ConvolutionEngine.h" />
     <ClInclude Include="ConvolveGeometry.h" />
     <ClInclude Include="CPUMatrix.h" />
+    <ClInclude Include="CPURNGHandle.h" />
     <ClInclude Include="MatrixQuantizerImpl.h" />
+    <ClInclude Include="RNGHandle.h" />
     <ClInclude Include="TensorOps.h" />
     <ClInclude Include="TensorView.h" />
     <None Include="ClassDiagram.cd" />
@@ -195,15 +197,9 @@ xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Common\ExceptionWithCallStack.cpp" />
-    <ClCompile Include="..\Common\File.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="..\Common\fileutil.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="BatchNormalizationEngine.cpp" />
     <ClCompile Include="ConvolutionEngine.cpp" />
+    <ClCompile Include="CPURNGHandle.cpp" />
     <ClCompile Include="CPUSparseMatrix.cpp" />
     <ClCompile Include="CUDAPageLockedMemAllocator.cpp" />
     <ClCompile Include="dllmain.cpp">
@@ -217,6 +213,7 @@ xcopy /D /I /Y "$(ACML_PATH)\lib\*.dll" $(OutputPath)</Command>
     <ClCompile Include="NoGPU.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="QuantizedMatrix.cpp" />
+    <ClCompile Include="RNGHandle.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
